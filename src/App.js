@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga';
+import { SocialIcon } from 'react-social-icons';
 import logo from './logo.svg';
 import './App.css';
 
@@ -11,10 +12,16 @@ function App() {
     e.preventDefault();
   }
   return (
-    <div className="App" onClick={(e) => handleClick(e)}>
+    <div className="App" >
       <header className="App-header">
-        <img src={logo} className="francis-locura-logo" />
-        <iframe title="soundcloud" height="350" scrolling="no" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/686600874&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        <img onClick={(e) => handleClick(e)} src={logo} className="francis-locura-logo" />
+        <br />
+        <div style={ {backgroundColor: 'black', borderRadius: 5, padding: 5} }>
+          <SocialIcon target="_blank" style={ {margin: 5} } url="https://open.spotify.com/artist/051lPfOQwzIgcYgf6V7KyJ" />
+          <SocialIcon target="_blank" style={ {margin: 5} } url="https://www.instagram.com/francislocura/" />
+          <SocialIcon target="_blank" style={ {margin: 5} } url="https://www.facebook.com/Francis-Locura-372140290315918/" />
+          <SocialIcon target="_blank" style={ {margin: 5} } url="https://soundcloud.com/francis_locura" />
+        </div>
       </header>
     </div>
   );
