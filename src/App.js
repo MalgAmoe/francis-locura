@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactGA from 'react-ga';
 import { SocialIcon } from 'react-social-icons';
 import logo from './logo.svg';
@@ -16,6 +16,7 @@ function App() {
         <div style={ {backgroundColor: '#101010', borderRadius: 5, padding: 5} }>
           <SocialIcon target="_blank" style={ {margin: 5} } url="https://open.spotify.com/artist/051lPfOQwzIgcYgf6V7KyJ" />
           <SocialIcon target="_blank" style={ {margin: 5} } url="https://www.instagram.com/francislocura/" />
+          <SocialIcon target="_blank" style={ {margin: 5} } url="https://www.youtube.com/channel/UCFT0iO_UsPoOV-k04X8XjDw" />
         </div>
       </header>
     </div>
@@ -29,13 +30,34 @@ const VinylLogo = () => {
     e.preventDefault();
   }
 
+  const requestRef = React.useRef();
+  const previousTimerRef = React.useRef();
+
+  const animate = time => {
+    if (previousTimerRef.current !== undefined) {
+      const deltaTime = time - previousTimerRef.current;
+
+      setRotation(prevRotation => (prevRotation + deltaTime * 0.1) % 360);
+    }
+    previousTimerRef.current = time;
+    requestRef.current = requestAnimationFrame(animate);
+  }
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []);
+
   const rotateLogo = e => {
     const x = e.nativeEvent.clientX - (e.nativeEvent.target.offsetLeft + e.nativeEvent.target.offsetHeight * 0.5);
     const y = e.nativeEvent.target.offsetTop + e.nativeEvent.target.offsetWidth * 0.5 - e.nativeEvent.clientY;
     const pressed = e.nativeEvent.buttons === 1;
     const newAngle = Math.atan2(y, x) * 180 / Math.PI;
     if (pressed) {
-      setRotation(rotation + angle - newAngle);
+      let newRotation = rotation + angle - newAngle;
+      if (newRotation > 180) newRotation -= 360;
+      else if (newRotation < -180) newRotation += 360;
+      setRotation(newRotation);
     }
     setAngle(newAngle);
   }
