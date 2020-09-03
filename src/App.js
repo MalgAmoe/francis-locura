@@ -46,6 +46,7 @@ const VinylLogo = () => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const rotateLogo = e => {
@@ -74,6 +75,7 @@ const VinylLogo = () => {
   }
 
   return (
+    // eslint-disable-next-line jsx-a11y/alt-text
     <img
       onDragStart={dragStart}
       onMouseMove={rotateLogo}
