@@ -74,6 +74,17 @@ const VinylLogo = () => {
     // setRotation(rotation + 90);
   }
 
+  const rotateLogoTouch = e => {
+    const x = e.touches[0].clientX - (e.touches[0].target.offsetLeft + e.touches[0].target.offsetHeight * 0.5);
+    const y = e.touches[0].target.offsetTop + e.touches[0].target.offsetWidth * 0.5 - e.touches[0].clientY;
+    const newAngle = Math.atan2(y, x) * 180 / Math.PI;
+    let newRotation = rotation + angle - newAngle;
+    if (newRotation > 180) newRotation -= 360;
+    else if (newRotation < -180) newRotation += 360;
+    setRotation(newRotation);
+    setAngle(newAngle);
+  }
+
   return (
     // eslint-disable-next-line jsx-a11y/alt-text
     <img
@@ -81,6 +92,7 @@ const VinylLogo = () => {
       onMouseMove={rotateLogo}
       onMouseEnter={moveIn}
       onMouseLeave={moveOut}
+      onTouchMove={rotateLogoTouch}
       src={logo}
       className="francis-locura-logo"
       style={{transform: `rotate(${rotation}deg)`}}
