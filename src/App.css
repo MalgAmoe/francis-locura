@@ -17,6 +17,13 @@
   margin-top: 20px;
 }
 
+.song-title{
+  color: black;
+  font-family: "Lucida Console", Courier, monospace;
+  margin: 0px;
+  margin-bottom: 30px;
+}
+
 @media (min-width: 1000px) {
   iframe {
     width: 33%;
