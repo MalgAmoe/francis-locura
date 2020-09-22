@@ -9,14 +9,51 @@ ReactGA.initialize('UA-142131045-1', {
 });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
+const path = 'http://localhost:4500';
+
 function App() {
+  const [songs, setSongs] = useState([]);
+  const [audio, setAudio] = useState(null);
+  const [selectedSong, setSelectedSong] = useState(0);
+
+  useEffect(() => {
+    function fetchSongs() {
+      return fetch(`${path}/songs`)
+        .then(data => data.json())
+        .then(json => {
+          setSongs(json);
+        });
+    }
+    fetchSongs();
+    setAudio(new Audio());
+  }, []);
+
+  useEffect(() => {
+    if (songs.length > 1) {
+      audio.src = `${path}/song/${selectedSong}`;
+    }
+  }, [selectedSong, songs, audio])
+
+  const changeSong = () => {
+    if (songs.length > 1) {
+      setSelectedSong((selectedSong + 1) % 2);
+    }
+  }
+
+  const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
+
   return (
     <div className='App' >
       <header className='App-header'>
         <VinylLogo
-          songTitle='The mega song'
+          audio={audio}
         />
         <br />
+        <h2
+          onClick={changeSong}
+          className='song-title'>
+            {songTitle}
+        </h2>
         <div style={ {backgroundColor: '#101010', borderRadius: 5, padding: 5} }>
           <SocialIcon target='_blank' style={ {margin: 5} } url='https://open.spotify.com/artist/051lPfOQwzIgcYgf6V7KyJ' />
           <SocialIcon target='_blank' style={ {margin: 5} } url='https://www.instagram.com/francislocura/' />
@@ -46,7 +83,7 @@ function useFrameNow(isActive) {
   return now;
 }
 
-const VinylLogo = ({songTitle}) => {
+const VinylLogo = ({songTitle, audio}) => {
   const [startTime, setStartTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [pastLapse, setPastLapse] = useState(0);
@@ -56,12 +93,14 @@ const VinylLogo = ({songTitle}) => {
   const totalLapse = pastLapse + currentLapse;
   const rotation = (totalLapse * 0.5) % 360;
 
-  function handleClick() {
+  async function handleClick() {
     if (isRunning) {
       setPastLapse(l => l + performance.now() - startTime);
       setStartTime(null);
+      audio.pause();
     } else {
       setStartTime(performance.now());
+      audio.play();
     }
     setIsRunning(!isRunning);
   }
@@ -80,10 +119,6 @@ const VinylLogo = ({songTitle}) => {
           className='francis-locura-logo'
           style={{transform: `rotate(${rotation}deg)`, cursor: 'pointer'}}
         />}
-          <h2
-            className='song-title'>
-              {songTitle}
-          </h2>
       </div>
   )
 }
