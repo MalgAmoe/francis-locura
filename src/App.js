@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ReactGA from 'react-ga';
 import { SocialIcon } from 'react-social-icons';
+import useFrameNow from './hooks/useFrameNow';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
   const [songs, setSongs] = useState([]);
   const [audio, setAudio] = useState(null);
   const [selectedSong, setSelectedSong] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     function fetchSongs() {
@@ -31,22 +33,30 @@ function App() {
   useEffect(() => {
     if (songs.length > 1) {
       audio.src = `${path}/song/${selectedSong}`;
+      if (isRunning) {
+        audio.play();
+      }
     }
-  }, [selectedSong, songs, audio])
+  }, [selectedSong, songs, audio, isRunning])
+
+  const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
   const changeSong = () => {
     if (songs.length > 1) {
-      setSelectedSong((selectedSong + 1) % 2);
+      setSelectedSong((selectedSong + 1) % 2); 
     }
   }
-
-  const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
   return (
     <div className='App' >
       <header className='App-header'>
         <VinylLogo
+          selectedSong={selectedSong}
+          setSelectedSong={setSelectedSong}
+          songs={songs}
           audio={audio}
+          isRunning={isRunning}
+          setIsRunning={setIsRunning}
         />
         <br />
         <h2
@@ -64,28 +74,8 @@ function App() {
   );
 }
 
-function useFrameNow(isActive) {
-  const [now, setNow] = useState(0);
-
-  useEffect(() => {
-    if (!isActive) return;
-
-    function tick() {
-      if (!isActive) return;
-      setNow(performance.now());
-      requestAnimationFrame(tick);
-    }
-
-    const id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
-  }, [isActive]);
-
-  return now;
-}
-
-const VinylLogo = ({songTitle, audio}) => {
+const VinylLogo = ({audio, songs, setSelectedSong, selectedSong, isRunning, setIsRunning}) => {
   const [startTime, setStartTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
   const [pastLapse, setPastLapse] = useState(0);
 
   const frameNow = useFrameNow(isRunning);

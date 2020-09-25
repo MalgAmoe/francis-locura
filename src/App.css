@@ -22,6 +22,7 @@
   font-family: "Lucida Console", Courier, monospace;
   margin: 0px;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 @media (min-width: 1000px) {
