@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import ReactGA from 'react-ga';
 import { SocialIcon } from 'react-social-icons';
-import useFrameNow from './hooks/useFrameNow';
-import logo from './logo.svg';
+import VinylLogo from './vinylLogo';
+
 import './App.css';
 
 ReactGA.initialize('UA-142131045-1', {
@@ -33,11 +33,8 @@ function App() {
   useEffect(() => {
     if (songs.length > 1) {
       audio.src = `${path}/song/${selectedSong}`;
-      if (isRunning) {
-        audio.play();
-      }
     }
-  }, [selectedSong, songs, audio, isRunning])
+  }, [selectedSong, songs, audio])
 
   const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
@@ -72,45 +69,6 @@ function App() {
       </header>
     </div>
   );
-}
-
-const VinylLogo = ({audio, songs, setSelectedSong, selectedSong, isRunning, setIsRunning}) => {
-  const [startTime, setStartTime] = useState(0);
-  const [pastLapse, setPastLapse] = useState(0);
-
-  const frameNow = useFrameNow(isRunning);
-  const currentLapse = isRunning ? Math.max(0, frameNow - startTime) : 0;
-  const totalLapse = pastLapse + currentLapse;
-  const rotation = (totalLapse * 0.5) % 360;
-
-  async function handleClick() {
-    if (isRunning) {
-      setPastLapse(l => l + performance.now() - startTime);
-      setStartTime(null);
-      audio.pause();
-    } else {
-      setStartTime(performance.now());
-      audio.play();
-    }
-    setIsRunning(!isRunning);
-  }
-
-  const dragStart = (e) => {
-    e.preventDefault();
-  }
-
-  return (
-    <div>
-        {// eslint-disable-next-line jsx-a11y/alt-text
-        <img
-          onDragStart={dragStart}
-          onClick={handleClick}
-          src={logo}
-          className='francis-locura-logo'
-          style={{transform: `rotate(${rotation}deg)`, cursor: 'pointer'}}
-        />}
-      </div>
-  )
 }
 
 export default App;
