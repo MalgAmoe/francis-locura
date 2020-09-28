@@ -21,3 +21,7 @@ export const getSongs = () => async dispatch => {
     dispatch(songError(e));
   }
 };
+
+export const PLAY_PAUSE = 'PLAY_PAUSE';
+
+export const setPlayPause = () => ({ type: PLAY_PAUSE });

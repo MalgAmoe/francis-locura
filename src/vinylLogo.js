@@ -1,26 +1,25 @@
 import React, {useState} from 'react';
 import useFrameNow from './hooks/useFrameNow';
 import logo from './static/logo.svg';
+import { setPlayPause } from './actions';
 
-const VinylLogo = ({audio, isRunning, setIsRunning}) => {
+const VinylLogo = ({ playing, dispatch }) => {
   const [startTime, setStartTime] = useState(0);
   const [pastLapse, setPastLapse] = useState(0);
 
-  const frameNow = useFrameNow(isRunning);
-  const currentLapse = isRunning ? Math.max(0, frameNow - startTime) : 0;
+  const frameNow = useFrameNow(playing);
+  const currentLapse = playing ? Math.max(0, frameNow - startTime) : 0;
   const totalLapse = pastLapse + currentLapse;
   const rotation = (totalLapse * 0.3) % 360;
 
   async function handleClick() {
-    if (isRunning) {
+    if (playing) {
       setPastLapse(l => l + performance.now() - startTime);
       setStartTime(null);
-      audio.pause();
     } else {
       setStartTime(performance.now());
-      audio.play();
     }
-    setIsRunning(!isRunning);
+    dispatch(setPlayPause());
   }
 
   const dragStart = (e) => {

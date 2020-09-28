@@ -17,19 +17,12 @@ export const path = 'http://localhost:4500';
 
 function App() {
   const [selectedSong, setSelectedSong] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { songs, audio } = state;
+  const { songs, playing } = state;
 
   useEffect(() => {
     getSongs()(dispatch);
   }, []);
-
-  // useEffect(() => {
-  //   if (songs.length > 1) {
-  //     audio.src = `${path}/song/${selectedSong}`;
-  //   }
-  // }, [selectedSong, songs, audio])
 
   const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
@@ -46,9 +39,8 @@ function App() {
           selectedSong={selectedSong}
           setSelectedSong={setSelectedSong}
           songs={songs}
-          audio={audio}
-          isRunning={isRunning}
-          setIsRunning={setIsRunning}
+          playing={playing}
+          dispatch={dispatch}
         />
         <br />
         <h2
