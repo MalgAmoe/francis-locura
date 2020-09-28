@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import useFrameNow from './hooks/useFrameNow';
-import logo from './logo.svg';
+import logo from './static/logo.svg';
 
 const VinylLogo = ({audio, isRunning, setIsRunning}) => {
   const [startTime, setStartTime] = useState(0);

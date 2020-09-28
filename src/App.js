@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import ReactGA from 'react-ga';
 import { SocialIcon } from 'react-social-icons';
+
+import { reducer, initialState } from './reducer';
+import { getSongs } from './actions';
 import VinylLogo from './vinylLogo';
 
 import './App.css';
@@ -10,31 +13,23 @@ ReactGA.initialize('UA-142131045-1', {
 });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-const path = 'http://localhost:4500';
+export const path = 'http://localhost:4500';
 
 function App() {
-  const [songs, setSongs] = useState([]);
-  const [audio, setAudio] = useState(null);
   const [selectedSong, setSelectedSong] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const { songs, audio } = state;
 
   useEffect(() => {
-    function fetchSongs() {
-      return fetch(`${path}/songs`)
-        .then(data => data.json())
-        .then(json => {
-          setSongs(json);
-        });
-    }
-    fetchSongs();
-    setAudio(new Audio());
+    getSongs()(dispatch);
   }, []);
 
-  useEffect(() => {
-    if (songs.length > 1) {
-      audio.src = `${path}/song/${selectedSong}`;
-    }
-  }, [selectedSong, songs, audio])
+  // useEffect(() => {
+  //   if (songs.length > 1) {
+  //     audio.src = `${path}/song/${selectedSong}`;
+  //   }
+  // }, [selectedSong, songs, audio])
 
   const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
