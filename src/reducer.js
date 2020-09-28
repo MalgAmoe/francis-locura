@@ -3,6 +3,7 @@ import {
   SONG_SUCCESS,
   SONG_ERROR,
   PLAY_PAUSE,
+  SET_SELECTED_SONG,
 } from './actions';
 import { path } from './App';
 
@@ -16,13 +17,12 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-  const { audio } = state;
+  const { audio, playing, selectedSong } = state;
   switch (action.type) {
     case SONG_REQUEST:
       return { ...state, loadingSongs: true };
     case SONG_SUCCESS:
       const { songs } = action;
-      const { selectedSong } = state;
       if (songs.length > selectedSong) {
         audio.src = `${path}/song/${selectedSong}`;
       }
@@ -31,13 +31,19 @@ const reducer = (state, action) => {
       const { error } = action;
       return { ...state, error }
     case PLAY_PAUSE:
-      const { playing } = state;
       if (playing) {
         audio.pause();
       } else {
         audio.play();
       }
-      return { ...state, playing: !playing }
+      return { ...state, playing: !playing };
+    case SET_SELECTED_SONG:
+      const newSelectedSong = (selectedSong + 1) % 2;
+      audio.src = `${path}/song/${newSelectedSong}`;
+      if (playing) {
+        audio.play();
+      }
+      return { ...state, selectedSong: newSelectedSong };
     default:
       return state;
   }

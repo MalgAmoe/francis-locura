@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useEffect, useReducer } from 'react';
 import ReactGA from 'react-ga';
 import { SocialIcon } from 'react-social-icons';
 
 import { reducer, initialState } from './reducer';
-import { getSongs } from './actions';
+import { getSongs, setSelectedSong } from './actions';
 import VinylLogo from './vinylLogo';
 
 import './App.css';
@@ -16,9 +16,8 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 export const path = 'http://localhost:4500';
 
 function App() {
-  const [selectedSong, setSelectedSong] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { songs, playing } = state;
+  const { songs, playing, selectedSong } = state;
 
   useEffect(() => {
     getSongs()(dispatch);
@@ -27,9 +26,7 @@ function App() {
   const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
   const changeSong = () => {
-    if (songs.length > 1) {
-      setSelectedSong((selectedSong + 1) % 2); 
-    }
+    dispatch(setSelectedSong());
   }
 
   return (
@@ -37,7 +34,6 @@ function App() {
       <header className='App-header'>
         <VinylLogo
           selectedSong={selectedSong}
-          setSelectedSong={setSelectedSong}
           songs={songs}
           playing={playing}
           dispatch={dispatch}
