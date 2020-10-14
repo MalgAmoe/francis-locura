@@ -16,8 +16,10 @@ const initialState = {
   playing: false,
 }
 
-const reducer = (state, action) => {
-  const { audio, playing, selectedSong } = state;
+const reducer = (state = initialState, action) => {
+  const { audio, playing, selectedSong, songs } = state;
+  const numSongs = songs.length;
+
   switch (action.type) {
     case SONG_REQUEST:
       return { ...state, loadingSongs: true };
@@ -31,6 +33,7 @@ const reducer = (state, action) => {
       const { error } = action;
       return { ...state, error }
     case PLAY_PAUSE:
+      if (numSongs === 0) return state;
       if (playing) {
         audio.pause();
       } else {
@@ -38,7 +41,7 @@ const reducer = (state, action) => {
       }
       return { ...state, playing: !playing };
     case SET_SELECTED_SONG:
-      const newSelectedSong = (selectedSong + 1) % 2;
+      const newSelectedSong = (selectedSong + 1) % numSongs;
       audio.src = `${path}/song/${newSelectedSong}`;
       if (playing) {
         audio.play();

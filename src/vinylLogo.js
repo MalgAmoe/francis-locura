@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useFrameNow from './hooks/useFrameNow';
 import logo from './static/logo.svg';
 import { setPlayPause } from './actions';
 
-const VinylLogo = ({ playing, dispatch }) => {
+const VinylLogo = () => {
   const [startTime, setStartTime] = useState(0);
   const [pastLapse, setPastLapse] = useState(0);
+  const playing = useSelector(state => state.playing);
+  const dispatch = useDispatch();
 
   const frameNow = useFrameNow(playing);
   const currentLapse = playing ? Math.max(0, frameNow - startTime) : 0;
