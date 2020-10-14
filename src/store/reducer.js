@@ -31,6 +31,7 @@ export const reducer = (state = initialState, action) => {
       return { ...state, songs: receivedSongs, loadingSongs: false };
     case SONG_ERROR:
       const { e } = action;
+      audio.pause();
       return { ...state, error: e, playing: false }
     case PLAY_PAUSE:
       if (numSongs === 0 || error) return state;
