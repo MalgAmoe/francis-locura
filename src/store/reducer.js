@@ -3,7 +3,7 @@ import {
   SONG_SUCCESS,
   SONG_ERROR,
   PLAY_PAUSE,
-  SET_SELECTED_SONG,
+  SET_SELECTED_SONG
 } from './actions';
 import { path } from '../page/App';
 
@@ -22,7 +22,7 @@ export const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case SONG_REQUEST:
-      return { ...state, loadingSongs: true };
+      return { ...state, loadingSongs: true, error: false };
     case SONG_SUCCESS:
       const { receivedSongs } = action;
       if (receivedSongs.length > selectedSong) {

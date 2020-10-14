@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getSongs, setSelectedSong, songError } from '../store/actions';
 import VinylLogo from '../organism/vinylLogo';
-import useFrameNow from '../hooks/useFrameNow';
+import ErrorTimer from '../organism/errorTimer';
 
 import './App.css';
 
@@ -20,15 +20,13 @@ function App() {
   const selectedSong = useSelector(state => state.selectedSong);
   const songs = useSelector(state => state.songs);
   const audio = useSelector(state => state.audio);
-  const error = useSelector(state => state.error);
   const dispatch = useDispatch();
   audio.onended = function(){
     changeSong();
   };
-  audio.onerror = function(e){
+  audio.onerror = function(){
     dispatch(songError(true))
   }
-  const frameNow = useFrameNow(error);
 
   useEffect(() => {
     getSongs()(dispatch);
@@ -43,10 +41,7 @@ function App() {
   return (
     <div className='App' >
       <header className='App-header'>
-        {error
-          ? <div className='error'><p>An Error has occurred, possibly you reloaded or changed song too many times in a short time.</p> <p>Wait {frameNow} 1 min and reload the page to carry on listening.</p></div>
-          : null
-        }
+        <ErrorTimer />
         <VinylLogo />
         <br />
         <h2
