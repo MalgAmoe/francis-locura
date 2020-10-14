@@ -16,7 +16,7 @@ const initialState = {
   playing: false,
 }
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   const { audio, playing, selectedSong, songs } = state;
   const numSongs = songs.length;
 
@@ -24,11 +24,11 @@ const reducer = (state = initialState, action) => {
     case SONG_REQUEST:
       return { ...state, loadingSongs: true };
     case SONG_SUCCESS:
-      const { songs } = action;
-      if (songs.length > selectedSong) {
-        audio.src = `${path}/song/${selectedSong}`;
+      const { receivedSongs } = action;
+      if (receivedSongs.length > selectedSong) {
+        audio.src = `${path}/song/${receivedSongs[selectedSong]}`;
       }
-      return { ...state, songs, loadingSongs: false };
+      return { ...state, songs: receivedSongs, loadingSongs: false };
     case SONG_ERROR:
       const { error } = action;
       return { ...state, error }
@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, playing: !playing };
     case SET_SELECTED_SONG:
       const newSelectedSong = (selectedSong + 1) % numSongs;
-      audio.src = `${path}/song/${newSelectedSong}`;
+      audio.src = `${path}/song/${songs[newSelectedSong]}`;
       if (playing) {
         audio.play();
       }
@@ -50,9 +50,4 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
-
-export {
-  initialState,
-  reducer
 }

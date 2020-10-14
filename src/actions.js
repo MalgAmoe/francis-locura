@@ -5,7 +5,7 @@ export const SONG_REQUEST = 'SONG_REQUEST';
 export const SONG_SUCCESS = 'SONG_SUCCESS';
 export const SONG_ERROR = 'SONG_ERROR';
 const songRequest = () => ({ type: SONG_REQUEST });
-const songSuccess = songs => ({ type: SONG_SUCCESS, songs });
+const songSuccess = receivedSongs => ({ type: SONG_SUCCESS, receivedSongs });
 const songError = error => ({ type: SONG_ERROR, error });
 
 export const SET_AUDIO = 'SET_AUDIO';

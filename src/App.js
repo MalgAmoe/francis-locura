@@ -13,12 +13,16 @@ ReactGA.initialize('UA-142131045-1', {
 });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-export const path = 'http://localhost:4500';
+export const path = process.env.REACT_APP_SERVER_URL;
 
 function App() {
   const selectedSong = useSelector(state => state.selectedSong);
   const songs = useSelector(state => state.songs);
+  const audio = useSelector(state => state.audio);
   const dispatch = useDispatch();
+  audio.onended = function(){
+    changeSong();
+  };
 
   useEffect(() => {
     getSongs()(dispatch);
