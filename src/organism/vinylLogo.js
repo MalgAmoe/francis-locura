@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useFrameNow from './hooks/useFrameNow';
-import logo from './static/logo.svg';
-import { setPlayPause } from './actions';
+import useFrameNow from '../hooks/useFrameNow';
+import logo from '../static/logo.svg';
+import { setPlayPause } from '../store/actions';
 
 const VinylLogo = () => {
   const [startTime, setStartTime] = useState(0);

@@ -5,11 +5,11 @@ import {
   PLAY_PAUSE,
   SET_SELECTED_SONG,
 } from './actions';
-import { path } from './App';
+import { path } from '../page/App';
 
 const initialState = {
   loadingSongs: false,
-  error: null,
+  error: false,
   songs: [],
   audio: new Audio(),
   selectedSong: 0,
@@ -17,7 +17,7 @@ const initialState = {
 }
 
 export const reducer = (state = initialState, action) => {
-  const { audio, playing, selectedSong, songs } = state;
+  const { audio, playing, selectedSong, songs, error } = state;
   const numSongs = songs.length;
 
   switch (action.type) {
@@ -30,10 +30,10 @@ export const reducer = (state = initialState, action) => {
       }
       return { ...state, songs: receivedSongs, loadingSongs: false };
     case SONG_ERROR:
-      const { error } = action;
-      return { ...state, error }
+      const { e } = action;
+      return { ...state, error: e, playing: false }
     case PLAY_PAUSE:
-      if (numSongs === 0) return state;
+      if (numSongs === 0 || error) return state;
       if (playing) {
         audio.pause();
       } else {
@@ -41,6 +41,7 @@ export const reducer = (state = initialState, action) => {
       }
       return { ...state, playing: !playing };
     case SET_SELECTED_SONG:
+      if (numSongs === 0 || error) return state;
       const newSelectedSong = (selectedSong + 1) % numSongs;
       audio.src = `${path}/song/${songs[newSelectedSong]}`;
       if (playing) {

@@ -26,6 +26,15 @@
   user-select: none;
 }
 
+.error{
+  color: white;
+  font-family: "Lucida Console", Courier, monospace;
+  margin: 0px;
+  margin-bottom: 30px;
+  user-select: none;
+  max-width: 50%;
+}
+
 @media (min-width: 1000px) {
   iframe {
     width: 33%;
