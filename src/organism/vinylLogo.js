@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFrameNow from '../hooks/useFrameNow';
 import logo from '../static/logo.svg';
+import FatArrow from '../static/fat_arrow.svg';
 import { setPlayPause } from '../store/actions';
 
 const VinylLogo = () => {
@@ -30,15 +31,18 @@ const VinylLogo = () => {
   }
 
   return (
-    <div>
-        {// eslint-disable-next-line jsx-a11y/alt-text
+    <div id='vinyl-container'>
+      <img className='previous-icon' src={FatArrow} alt="Previous" />
+        {
         <img
           onDragStart={dragStart}
           onClick={handleClick}
           src={logo}
           className='francis-locura-logo'
           style={{transform: `rotate(${rotation}deg)`, cursor: 'pointer'}}
+          alt="Play"
         />}
+        <img className='next-icon' src={FatArrow} alt="Next" />
       </div>
   )
 }

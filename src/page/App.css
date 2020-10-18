@@ -21,6 +21,30 @@
   opacity: 0.9;
 }
 
+#vinyl-container {
+  display: flex;
+  align-items: center;
+}
+
+.next-icon {
+  height: 15vmin;
+  cursor: pointer;
+}
+
+.next-icon:hover {
+  opacity: 0.9;
+}
+
+.previous-icon {
+  height: 15vmin;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+
+.previous-icon:hover {
+  opacity: 0.9;
+}
+
 .song-title{
   color: black;
   font-family: "Lucida Console", Courier, monospace;
