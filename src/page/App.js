@@ -44,7 +44,7 @@ function App() {
     <div className='App' >
       <header className='App-header'>
         <ErrorTimer />
-        <div className='song-title'></div>
+        <div className='page-title'></div>
         <VinylLogo />
         <br />
         <h2

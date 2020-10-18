@@ -47,6 +47,14 @@
   opacity: 0.9;
 }
 
+.page-title{
+  color: black;
+  font-family: "Lucida Console", Courier, monospace;
+  margin: 0px;
+  margin-bottom: 0px;
+  user-select: none;
+}
+
 .song-title{
   color: black;
   font-family: "Lucida Console", Courier, monospace;
