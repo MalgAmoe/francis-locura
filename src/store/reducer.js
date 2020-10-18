@@ -25,7 +25,6 @@ export const reducer = (state = initialState, action) => {
       return { ...state, loadingSongs: true, error: false };
     case SONG_SUCCESS:
       const { receivedSongs } = action;
-      audio.load();
       if (receivedSongs.length > selectedSong) {
         audio.src = `${path}/song/${receivedSongs[selectedSong]}`;
       }
@@ -39,7 +38,6 @@ export const reducer = (state = initialState, action) => {
       if (playing) {
         audio.pause();
       } else {
-        audio.load();
         audio.play();
       }
       return { ...state, playing: !playing };
