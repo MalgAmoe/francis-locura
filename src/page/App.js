@@ -18,6 +18,9 @@ if (process.env.REACT_APP_ENV === 'PROD') {
 
 export const path = process.env.REACT_APP_SERVER_URL;
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+audioCtx.resume()
 function App() {
   const [isSafari, setIsSafari] = useState(false);
   const selectedSong = useSelector(state => state.selectedSong);
@@ -46,39 +49,9 @@ function App() {
     dispatch(setSelectedSong(1));
   }
 
-  function enableAudio(element, audio, onEnd){
-    var callback = false,
-        click    = false;
-
-    click = function(e){
-      var forceStop = function () {
-            audio.removeEventListener('play', forceStop, false);
-            audio.pause();
-            element.removeEventListener('touchstart', click, false);
-            if(onEnd) onEnd();
-          },
-          progress  = function () {
-            audio.removeEventListener('canplaythrough', progress, false);
-            if (callback) callback();
-          };
-
-      audio.addEventListener('play', forceStop, false);
-      audio.addEventListener('canplaythrough', progress, false);
-      try { 
-        audio.play();
-      } catch (e) {
-        callback = function () {
-          callback = false;
-          audio.play();
-        };
-      }
-    };
-    element.addEventListener('touchstart', click, false);
-  }
-
   return (
     <div className='App' >
-      {isSafari ? <div>Safari does not work...Maybe I suck, maybe Apple is worst than me. <p>In the mean time if you have iOS, you can't use this website. If you're on an Apple device that does not live in a bubble(iOS), maybe you can try an other browser.</p><p onClick={enableAudio}>Peace</p><audio src='https://api.francislocura.art/song/lysergic'></audio></div> :
+      {isSafari ? <div>Safari does not work...Maybe I suck, maybe Apple is worst than me. <p>In the mean time if you have iOS, you can't use this website. If you're on an Apple device that does not live in a bubble(iOS), maybe you can try an other browser.</p><p>Peace</p></div> :
       <header className='App-header'>
         <ErrorTimer />
         <div className='page-title'></div>
