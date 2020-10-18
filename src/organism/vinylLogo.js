@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFrameNow from '../hooks/useFrameNow';
 import logo from '../static/logo.svg';
 import FatArrow from '../static/fat_arrow.svg';
-import { setPlayPause } from '../store/actions';
+import { setPlayPause, setSelectedSong } from '../store/actions';
 
 const VinylLogo = () => {
   const [startTime, setStartTime] = useState(0);
@@ -30,9 +30,22 @@ const VinylLogo = () => {
     e.preventDefault();
   }
 
+  const nextSong = () => {
+    dispatch(setSelectedSong(1));
+  }
+
+  const previousSong = () => {
+    dispatch(setSelectedSong(-1));
+  }
+
   return (
     <div id='vinyl-container'>
-      <img className='previous-icon' src={FatArrow} alt="Previous" />
+      <img
+        onClick={previousSong}
+        className='previous-icon'
+        src={FatArrow}
+        alt="Previous"
+      />
         {
         <img
           onDragStart={dragStart}
@@ -42,7 +55,12 @@ const VinylLogo = () => {
           style={{transform: `rotate(${rotation}deg)`, cursor: 'pointer'}}
           alt="Play"
         />}
-        <img className='next-icon' src={FatArrow} alt="Next" />
+        <img
+          onClick={nextSong}
+          className='next-icon'
+          src={FatArrow}
+          alt="Next"
+        />
       </div>
   )
 }

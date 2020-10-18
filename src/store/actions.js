@@ -24,4 +24,4 @@ export const PLAY_PAUSE = 'PLAY_PAUSE';
 export const setPlayPause = () => ({ type: PLAY_PAUSE });
 
 export const SET_SELECTED_SONG = 'SET_SELECTED_SONG';
-export const setSelectedSong = () => ({ type: SET_SELECTED_SONG });
+export const setSelectedSong = (value) => ({ type: SET_SELECTED_SONG, value });

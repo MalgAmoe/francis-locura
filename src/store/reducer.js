@@ -43,7 +43,9 @@ export const reducer = (state = initialState, action) => {
       return { ...state, playing: !playing };
     case SET_SELECTED_SONG:
       if (numSongs === 0 || error) return state;
-      const newSelectedSong = (selectedSong + 1) % numSongs;
+      const { value } = action;
+      let newSelectedSong = (selectedSong + value) % numSongs;
+      newSelectedSong = newSelectedSong < 0 ? numSongs - 1 : newSelectedSong;
       audio.src = `${path}/song/${songs[newSelectedSong]}`;
       if (playing) {
         audio.play();

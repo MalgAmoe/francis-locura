@@ -47,7 +47,6 @@ function App() {
         <VinylLogo />
         <br />
         <h2
-          onClick={changeSong}
           className='song-title'>
             {songTitle}
         </h2>

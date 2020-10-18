@@ -29,6 +29,7 @@
 .next-icon {
   height: 15vmin;
   cursor: pointer;
+  user-select: none;
 }
 
 .next-icon:hover {
@@ -38,6 +39,7 @@
 .previous-icon {
   height: 15vmin;
   cursor: pointer;
+  user-select: none;
   transform: rotate(180deg);
 }
 
@@ -50,7 +52,6 @@
   font-family: "Lucida Console", Courier, monospace;
   margin: 0px;
   margin-bottom: 30px;
-  cursor: pointer;
   user-select: none;
 }
 
