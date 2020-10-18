@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className='App' >
-      {isSafari ? <div>Safari does not work...Maybe I suck, maybe Apple is worst than me. <p>In the mean time if you have iOS, you can't use this website. If you're on an Apple device that does not live in a bubble(iOS), maybe you can try an other browser.</p><p>Peace</p><audio controls='true' src='https://api.francislocura.art/song/2trk 1'></audio></div> :
+      {isSafari ? <div>Safari does not work...Maybe I suck, maybe Apple is worst than me. <p>In the mean time if you have iOS, you can't use this website. If you're on an Apple device that does not live in a bubble(iOS), maybe you can try an other browser.</p><p>Peace</p><audio controls src='https://api.francislocura.art/song/lysergic'></audio></div> :
       <header className='App-header'>
         <ErrorTimer />
         <div className='page-title'></div>
