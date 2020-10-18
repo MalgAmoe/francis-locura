@@ -9,10 +9,12 @@ import ErrorTimer from '../organism/errorTimer';
 
 import './App.css';
 
-ReactGA.initialize('UA-142131045-1', {
-  gaOptions: { cookieFlags: 'max-age=7200;secure;samesite=none'}
-});
-ReactGA.pageview(window.location.pathname + window.location.search);
+if (process.env.REACT_APP_ENV === 'PROD') {
+  ReactGA.initialize('UA-142131045-1', {
+    gaOptions: { cookieFlags: 'max-age=7200;secure;samesite=none'}
+  });
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 export const path = process.env.REACT_APP_SERVER_URL;
 

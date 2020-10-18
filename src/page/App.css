@@ -17,6 +17,10 @@
   margin-top: 20px;
 }
 
+.francis-locura-logo:hover {
+  opacity: 0.9;
+}
+
 .song-title{
   color: black;
   font-family: "Lucida Console", Courier, monospace;
