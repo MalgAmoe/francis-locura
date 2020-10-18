@@ -37,13 +37,14 @@ function App() {
   const songTitle = songs[selectedSong] ? songs[selectedSong] : 'Loading...'
 
   const changeSong = () => {
-    dispatch(setSelectedSong());
+    dispatch(setSelectedSong(1));
   }
 
   return (
     <div className='App' >
       <header className='App-header'>
         <ErrorTimer />
+        <div className='song-title'></div>
         <VinylLogo />
         <br />
         <h2
