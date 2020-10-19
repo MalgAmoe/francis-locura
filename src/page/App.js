@@ -18,9 +18,6 @@ if (process.env.REACT_APP_ENV === 'PROD') {
 
 export const path = process.env.REACT_APP_SERVER_URL;
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-audioCtx.resume()
 function App() {
   const [isSafari, setIsSafari] = useState(false);
   const selectedSong = useSelector(state => state.selectedSong);
@@ -51,7 +48,8 @@ function App() {
 
   return (
     <div className='App' >
-      {isSafari ? <div>Safari does not work...Maybe I suck, maybe Apple is worst than me. <p>In the mean time if you have iOS, you can't use this website. If you're on an Apple device that does not live in a bubble(iOS), maybe you can try an other browser.</p><p>Peace</p></div> :
+      {isSafari
+        ? <div><p>Safari does not work with this website at the moment.</p><p>If you are using an iOS device, you can't use this website unfortunately. If you're on an Apple device with Mac OS, you can try an other browser and it should work.</p><p>Peace</p></div> :
       <header className='App-header'>
         <ErrorTimer />
         <div className='page-title'></div>
