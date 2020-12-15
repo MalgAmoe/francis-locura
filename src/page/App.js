@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getSongs, setSelectedSong, songError } from '../store/actions';
 import VinylLogo from '../organism/vinylLogo';
-import ErrorTimer from '../organism/errorTimer';
+import PlayTitle from '../organism/playTitle';
 
 import './App.css';
 
@@ -43,7 +43,7 @@ function App() {
   return (
     <div className='App' >
       <header className='App-header'>
-        <ErrorTimer />
+        <PlayTitle  />
         <div className='page-title'></div>
         <VinylLogo />
         <br />
