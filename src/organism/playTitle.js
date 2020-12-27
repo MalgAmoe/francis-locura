@@ -6,7 +6,7 @@ export default function PlayTitle() {
   const playing = useSelector(state => state.playing);
   return (
     <Text>
-      {`Touch the vinyl to ${playing ? 'pause' : 'play'}`}
+      {playing ? '...' : 'Touch the vinyl to play'}
     </Text>
   )
 }
