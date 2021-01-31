@@ -53,7 +53,6 @@ function App() {
         </h2>
         <div style={ {backgroundColor: '#101010', borderRadius: 5, padding: 5} }>
           <SocialIcon target='_blank' style={ {margin: 5} } url='https://open.spotify.com/artist/051lPfOQwzIgcYgf6V7KyJ' />
-          <SocialIcon target='_blank' style={ {margin: 5} } url='https://www.instagram.com/francislocura/' />
           <SocialIcon target='_blank' style={ {margin: 5} } url='https://www.youtube.com/channel/UCFT0iO_UsPoOV-k04X8XjDw' />
         </div>
       </header>
