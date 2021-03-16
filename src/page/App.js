@@ -10,7 +10,7 @@ import PlayTitle from '../organism/playTitle';
 import './App.css';
 
 if (process.env.REACT_APP_ENV === 'PROD') {
-  ReactGA.initialize('UA-142131045-1', {
+  ReactGA.initialize(process.env.REACT_APP_GA, {
     gaOptions: { cookieFlags: 'max-age=7200;secure;samesite=none'}
   });
   ReactGA.pageview(window.location.pathname + window.location.search);
